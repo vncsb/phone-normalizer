@@ -36,6 +36,7 @@ func main() {
 
 	db, err := database.OpenConnection(conn)
 	must(err)
+	defer db.Close()
 
 	must(db.InsertNumbers(phones))
 
