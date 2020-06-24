@@ -37,6 +37,8 @@ func main() {
 	db, err := database.OpenConnection(conn)
 	must(err)
 
+	must(db.InsertNumbers(phones))
+
 	numbers, err := db.GetNumbers()
 	must(err)
 
@@ -44,10 +46,7 @@ func main() {
 	for _, pn := range numbers {
 		fmt.Println(pn)
 		pn.Number = normalize(pn.Number)
-		err := db.UpdateNumbers(pn)
-		if err != nil {
-			panic(err)
-		}
+		must(db.UpdateNumbers(pn))
 	}
 
 	numbers, err = db.GetNumbers()
